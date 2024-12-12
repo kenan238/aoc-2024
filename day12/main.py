@@ -83,7 +83,6 @@ def find_regions():
                     p, o = side
                     o2 = CARDINALS[(CARDINALS.index(o) + 1) % 4]
                     next = tuple([sum(x) for x in zip(p, o2)])
-                    print(sides)
                     while next in region and (next, o) in sides:
                         if (next, o) in sides_backup:
                             sides.remove((next, o))
