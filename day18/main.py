@@ -1,3 +1,5 @@
+import functools
+
 positions = []
 
 with open("data.txt", "r") as f:
@@ -14,6 +16,7 @@ def get_cell(x, y):
         return grid[y][x]
     return None
 
+#@functools.lru_cache(maxsize=None)
 def find_shortest_path(start, end):
     # list of directions
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -49,10 +52,23 @@ def show_positions(pos, path):
                 print(get_cell(x, y), end="")
         print()
 
-for x, y in positions:
+for i, (x, y) in enumerate(positions):
+    if not (i <= 1024):
+        continue
     grid[y][x] = '#'
 
-d, p = find_shortest_path((0, 0), (6, 6))
+d, p = find_shortest_path((0, 0), (size-1, size-1))
 
+print("Part 1", d)
 #show_positions((0, 0), p)
-print(d)
+
+count = 1024
+while count < len(positions):
+    xx, yy = positions[count]
+    grid[yy][xx] = '#'
+    d, p = find_shortest_path((0, 0), (size-1, size-1))
+    if d is None:
+        break
+    count += 1
+
+print(positions[count])
